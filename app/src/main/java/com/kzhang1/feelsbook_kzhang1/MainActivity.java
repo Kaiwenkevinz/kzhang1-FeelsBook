@@ -3,6 +3,7 @@ package com.kzhang1.feelsbook_kzhang1;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,12 +17,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+//                    setTitle("Home");
+                    Home home = new Home();
+                    fragmentManager.beginTransaction().replace(R.id.fragment, home).commit();
                     return true;
+
                 case R.id.navigation_history:
-                    mTextMessage.setText(R.string.history);
+//                    setTitle("History");
+                    History history = new History();
+                    fragmentManager.beginTransaction().replace(R.id.fragment, history).commit();
                     return true;
             }
             return false;
@@ -33,9 +40,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mTextMessage = (TextView) findViewById(R.id.message);
+
+//        add navigation event listener
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        set home fragment to default
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        setTitle("FeelsBook-kzhang1");
+        Home home = new Home();
+        fragmentManager.beginTransaction().replace(R.id.fragment, home).commit();
     }
 
 }
