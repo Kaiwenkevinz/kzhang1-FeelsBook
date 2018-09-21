@@ -8,5 +8,8 @@
     <string name="surprise">surprise</string>
     <string name="title_home">home</string>
     <string name="history">history</string>
+    <string name="emotion">emotion</string>
+    <string name="date">date</string>
+    <string name="comment">comment</string>
 
 </resources>
