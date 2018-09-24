@@ -11,5 +11,7 @@
     <string name="emotion">emotion</string>
     <string name="date">date</string>
     <string name="comment">comment</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 
 </resources>
