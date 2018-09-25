@@ -58,7 +58,6 @@ public class Home extends Fragment {
                 View view_user_input = inflater.inflate(R.layout.user_input, container, false);
                 final EditText editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
 
-
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
                 alertBuilder.setView(view_user_input);
                 alertBuilder.setCancelable(true);
