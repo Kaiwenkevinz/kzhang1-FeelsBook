@@ -20,6 +20,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,7 +45,7 @@ public class History extends Fragment {
     private ListView listView_emotion;
     private EmotionListAdapter emotionListAdapter;
     private ArrayList<Emotion> mEmotionList = new ArrayList<Emotion>();
-    private Fragment history_fragment;
+//    private EditText editText_userInput;
 
     public History() {
         // Required empty public constructor
@@ -92,8 +93,48 @@ public class History extends Fragment {
                 });
                 Dialog dialog = alertBuilder.create();
                 dialog.show();
+                return true;
+            }
+        });
+        listView_emotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                View view_user_input = inflater.inflate(R.layout.user_input, container, false);
+                final EditText editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
+                // load data
+//                mEmotionList = sharedPreference.readPreference(getActivity());
+                // set editText userInput
+                final Emotion selected_emotion = mEmotionList.get(position);
+                String comment = selected_emotion.getComment();
+                editText_userInput.setText(comment);
+                // make dialog
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+                alertBuilder.setView(view_user_input);
+                alertBuilder.setCancelable(true);
+                alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selected_emotion.setComment(editText_userInput.getText().toString());
+                        // update data
+                        ArrayList<Emotion> tempList;
+                        tempList = sharedPreference.readPreference(getActivity());
+                        tempList.remove(position);
+                        tempList.add(position, selected_emotion);
+                        sharedPreference.refreshPreference(getActivity(), tempList);
+                        mEmotionList.clear();
+                        mEmotionList.addAll(tempList);
+                        emotionListAdapter.notifyDataSetChanged();
+                    }
+                });
 
-                return false;
+                alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                Dialog dialog = alertBuilder.create();
+                dialog.show();
+
             }
         });
 
