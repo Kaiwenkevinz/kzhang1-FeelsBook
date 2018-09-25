@@ -6,20 +6,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmotionListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Emotion> mEmotionList;
+    private ArrayList<Emotion> mEmotionList;
+    SharedPreference sharedPreference;
 
-    public EmotionListAdapter(Context mContext, List<Emotion> mEmotionList) {
+    public EmotionListAdapter(Context mContext, ArrayList<Emotion> mEmotionList) {
         this.mContext = mContext;
         this.mEmotionList = mEmotionList;
+        sharedPreference = new SharedPreference();
     }
 
     @Override
     public int getCount() {
+        if (mEmotionList == null) {
+            return 0;
+        }
         return mEmotionList.size();
     }
 

@@ -1,116 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".Home"
+    tools:layout_editor_absoluteY="81dp">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button
+        android:id="@+id/button_love"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="75dp"
+        android:text="@string/love"
+        app:layout_constraintBottom_toTopOf="@+id/button_sadness"
+        app:layout_constraintEnd_toStartOf="@+id/button_joy"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_love"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="115dp"
-            android:text="@string/love"
-            app:layout_constraintBottom_toTopOf="@+id/button_anger"
-            app:layout_constraintEnd_toStartOf="@+id/button_surprise"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
+    <Button
+        android:id="@+id/button_joy"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:text="@string/joy"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_anger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toEndOf="@+id/button_love"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_joy"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/joy"
-            app:layout_constraintBottom_toTopOf="@+id/button_fear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toEndOf="@+id/button_anger"
-            app:layout_constraintTop_toBottomOf="@+id/button_surprise"
-            app:layout_constraintWidth_percent="0.5" />
+    <Button
+        android:id="@+id/button_surprise"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:text="@string/surprise"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_love"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toEndOf="@+id/button_anger"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_surprise"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="115dp"
-            android:text="@string/surprise"
-            app:layout_constraintBottom_toTopOf="@+id/button_joy"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toEndOf="@+id/button_love"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
+    <Button
+        android:id="@+id/button_anger"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="184dp"
+        android:text="@string/anger"
+        app:layout_constraintBottom_toTopOf="@+id/button_sadness"
+        app:layout_constraintEnd_toStartOf="@+id/button_surprise"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_anger"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:text="@string/anger"
-            app:layout_constraintBottom_toTopOf="@+id/button_sadness"
-            app:layout_constraintEnd_toStartOf="@+id/button_joy"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_love"
-            app:layout_constraintWidth_percent="0.5" />
+    <Button
+        android:id="@+id/button_fear"
+        android:layout_width="0dp"
+        android:layout_height="77dp"
+        android:text="@string/fear"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_sadness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toEndOf="@+id/button_sadness"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_fear"
-            android:layout_width="0dp"
-            android:layout_height="78dp"
-            android:layout_marginBottom="37dp"
-            android:text="@string/fear"
-            app:layout_constraintBottom_toTopOf="@+id/button_surprise"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
+    <Button
+        android:id="@+id/button_sadness"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="173dp"
+        android:text="@string/sadness"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_fear"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_anger"
+        app:layout_constraintWidth_percent="0.5" />
 
-        <Button
-            android:id="@+id/button_sadness"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="174dp"
-            android:text="@string/sadness"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_joy"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_anger"
-            app:layout_constraintWidth_percent="0.5" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="243dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="27dp"
+        android:text="What is your emotion?"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_love"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="243dp"
-            android:layout_height="49dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginEnd="101dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="101dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="36dp"
-            android:text="What is your emotion?"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_love"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_userInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="49dp"
-            tools:layout_editor_absoluteY="407dp" />
-
-    </android.support.constraint.ConstraintLayout>
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
