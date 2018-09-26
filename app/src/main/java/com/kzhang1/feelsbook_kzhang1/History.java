@@ -58,7 +58,6 @@ public class History extends Fragment {
         final SharedPreference sharedPreference = new SharedPreference();
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         listView_emotion = (ListView) v.findViewById(R.id.history_listView);
-
         // load data
         mEmotionList = sharedPreference.readPreference(getActivity());
         // generate and set listAdapter
@@ -100,13 +99,10 @@ public class History extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 View view_user_input = inflater.inflate(R.layout.user_input, container, false);
+                TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
                 final EditText editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
-                // load data
-//                mEmotionList = sharedPreference.readPreference(getActivity());
-                // set editText userInput
                 final Emotion selected_emotion = mEmotionList.get(position);
-                String comment = selected_emotion.getComment();
-                editText_userInput.setText(comment);
+                final String comment = selected_emotion.getComment();
                 // make dialog
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
                 alertBuilder.setView(view_user_input);
@@ -114,8 +110,8 @@ public class History extends Fragment {
                 alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        selected_emotion.setComment(editText_userInput.getText().toString());
                         // update data
+                        selected_emotion.setComment(editText_userInput.getText().toString());
                         ArrayList<Emotion> tempList;
                         tempList = sharedPreference.readPreference(getActivity());
                         tempList.remove(position);
@@ -132,6 +128,9 @@ public class History extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
+                editText_userInput.setText(comment);
+                String date = new Date().getStringDate();
+                textView_date.setText(date);
                 Dialog dialog = alertBuilder.create();
                 dialog.show();
 
