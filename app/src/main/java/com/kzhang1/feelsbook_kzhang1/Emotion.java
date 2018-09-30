@@ -6,10 +6,16 @@ public class Emotion {
     private String comment;
 
     // constructor
-    public Emotion(String emotion, String date, String comment) {
+    Emotion(String emotion, String date, String comment) {
         this.emotion = emotion;
         this.date = date;
         this.comment = comment;
+    }
+
+    Emotion() {
+        this.emotion = "";
+        this.date = "";
+        this.comment = "";
     }
 
     // getter

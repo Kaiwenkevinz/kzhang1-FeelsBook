@@ -9,7 +9,7 @@ public class Date {
         String date;
 
     Date() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         date = dateFormat.format(Calendar.getInstance().getTime());
     }
 
