@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -43,7 +46,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
+public class Home extends Fragment implements View.OnClickListener{
 
     private ArrayList<Emotion> mEmotionList = new ArrayList<>();
     View view_user_input;
@@ -56,6 +59,8 @@ public class Home extends Fragment implements View.OnClickListener, TimePickerDi
     int the_day = c.get(Calendar.DAY_OF_MONTH);
     int the_hour = c.get(Calendar.HOUR_OF_DAY);
     int the_minute = c.get(Calendar.MINUTE);
+    String comment;
+    EditText editText_userInput;
 
     public Home() {
         // Required empty public constructor
@@ -84,13 +89,22 @@ public class Home extends Fragment implements View.OnClickListener, TimePickerDi
         button_anger.setOnClickListener(this);
         button_joy.setOnClickListener(this);
         button_sadness.setOnClickListener(this);
+//        button_love.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Toast.makeText(getActivity(), "Comment exceeded 100 characters",
+//                        Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        });
+
         return v;
     }
 
     @Override public void onClick(View v) {
         final View v_1 = v;
         view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
-        final EditText editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
+        editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
         Button button_change_time = (Button) view_user_input.findViewById(R.id.button_change_time);
         Button button_change_date= (Button) view_user_input.findViewById(R.id.button_change_date);
         TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
@@ -127,13 +141,14 @@ public class Home extends Fragment implements View.OnClickListener, TimePickerDi
                         break;
                 }
                 // comment
-                emotion.setComment(editText_userInput.getText().toString());
+                comment = editText_userInput.getText().toString();
+                // check characters length
 
+
+                emotion.setComment(comment);
                 // date
                 String date_and_time = String.format("%04d-%02d-%02dT%02d:%02d", the_year, the_month, the_day, the_hour, the_minute);
                 emotion.setDate(date_and_time);
-
-
                 // save data
                 sharedPreference.savePreference(getActivity(), emotion);
             }
@@ -158,8 +173,6 @@ public class Home extends Fragment implements View.OnClickListener, TimePickerDi
                 showDialogDatePicker();
             }
         });
-//        String current_date = new Date().getStringDate();
-//        String current_time = new TimeOfDay().getStringTime();
         textView_date.setText(String.format("%04d-%02d-%02d", the_year, the_month ,the_day));
         textView_time.setText(String.format("T%02d:%02d", the_hour, the_minute));
         Dialog dialog = alertBuilder.create();
@@ -167,12 +180,6 @@ public class Home extends Fragment implements View.OnClickListener, TimePickerDi
 
 
 
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//        TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
-//        textView_date.setText("hour" + Integer.toString(hourOfDay) + "minute" + Integer.toString(minute));
     }
 
     private void showDialogTimePicker () {

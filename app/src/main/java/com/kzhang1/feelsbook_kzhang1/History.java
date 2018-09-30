@@ -37,9 +37,13 @@ import com.google.gson.reflect.TypeToken;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static android.R.layout.simple_list_item_1;
@@ -82,6 +86,7 @@ public class History extends Fragment {
         mEmotionList = sharedPreference.readPreference(getActivity());
 
         // generate and set listAdapter
+        Collections.sort(mEmotionList, new DateComparator());
         emotionListAdapter = new EmotionListAdapter(getContext(), mEmotionList);
         ListView listView_emotion = (ListView) v.findViewById(R.id.history_listView);
         listView_emotion.setAdapter(emotionListAdapter);
@@ -92,6 +97,7 @@ public class History extends Fragment {
 
         return v;
     }
+
 
     private AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -119,6 +125,7 @@ public class History extends Fragment {
                         tempList = sharedPreference.readPreference(getActivity());
                         tempList.remove(position);
                         tempList.add(position, emotion);
+                        Collections.sort(tempList, new DateComparator());
                         sharedPreference.refreshPreference(getActivity(), tempList);
                         mEmotionList.clear();
                         mEmotionList.addAll(tempList);
@@ -201,11 +208,9 @@ public class History extends Fragment {
 
     private void showDialogDatePicker () {
         DatePickerDialog.OnDateSetListener mOnDateSetListener;
-        Calendar c = Calendar.getInstance();
-        int mYear = c.get(Calendar.YEAR);
-        int mMonth = c.get(Calendar.MONTH);
-        int mDay = c.get(Calendar.DAY_OF_MONTH);
-//        the_year = mYear;
+        int mYear = the_year;
+        int mMonth = the_month;
+        int mDay = the_day;
 
 
         mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {

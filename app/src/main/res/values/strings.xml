@@ -13,6 +13,6 @@
     <string name="comment">comment</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="enter_comment">enter comment</string>
+    <string name="enter_comment">Enter Comment \n(less than 100 characters)</string>
 
 </resources>
