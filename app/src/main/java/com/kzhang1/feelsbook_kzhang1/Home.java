@@ -46,7 +46,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment implements View.OnClickListener{
+public class Home extends Fragment implements View.OnClickListener, View.OnLongClickListener{
 
     private ArrayList<Emotion> mEmotionList = new ArrayList<>();
     View view_user_input;
@@ -89,6 +89,12 @@ public class Home extends Fragment implements View.OnClickListener{
         button_anger.setOnClickListener(this);
         button_joy.setOnClickListener(this);
         button_sadness.setOnClickListener(this);
+        button_love.setOnLongClickListener(this);
+        button_fear.setOnLongClickListener(this);
+        button_surprise.setOnLongClickListener(this);
+        button_anger.setOnLongClickListener(this);
+        button_joy.setOnLongClickListener(this);
+        button_sadness.setOnLongClickListener(this);
 //        button_love.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
@@ -142,9 +148,6 @@ public class Home extends Fragment implements View.OnClickListener{
                 }
                 // comment
                 comment = editText_userInput.getText().toString();
-                // check characters length
-
-
                 emotion.setComment(comment);
                 // date
                 String date_and_time = String.format("%04d-%02d-%02dT%02d:%02d", the_year, the_month, the_day, the_hour, the_minute);
@@ -177,9 +180,6 @@ public class Home extends Fragment implements View.OnClickListener{
         textView_time.setText(String.format("T%02d:%02d", the_hour, the_minute));
         Dialog dialog = alertBuilder.create();
         dialog.show();
-
-
-
     }
 
     private void showDialogTimePicker () {
@@ -228,4 +228,36 @@ public class Home extends Fragment implements View.OnClickListener{
 
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+
+        Emotion emotion = new Emotion();
+        emotion.setDate(String.format("%04d-%02d-%02dT%02d:%02d", the_year, the_month, the_day, the_hour, the_minute));
+        //emotion
+        switch (v.getId()) {
+            case R.id.button_love:
+                emotion.setEmotion("LOVE");
+                break;
+            case R.id.button_surprise:
+                emotion.setEmotion("SURPRISE");
+                break;
+            case R.id.button_anger:
+                emotion.setEmotion("ANGER");
+                break;
+            case R.id.button_joy:
+                emotion.setEmotion("JOY");
+                break;
+            case R.id.button_sadness:
+                emotion.setEmotion("SADNESS");
+                break;
+            case R.id.button_fear:
+                emotion.setEmotion("FEAR");
+                break;
+        }
+        sharedPreference.savePreference(getActivity(), emotion);
+        Toast.makeText(getActivity(), String.format("%s added at %s", emotion.getEmotion(), emotion.getDate()),
+        Toast.LENGTH_LONG).show();
+
+        return true;
+    }
 }

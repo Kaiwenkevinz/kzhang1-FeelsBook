@@ -85,8 +85,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="72dp"
-        android:text="What is your emotion?"
-        android:textSize="24sp"
+        android:text="@string/what_is_your_emotion"
+        android:textSize="20dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="27dp" />
 
