@@ -31,13 +31,16 @@ import com.google.gson.reflect.TypeToken;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -48,8 +51,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class Home extends Fragment implements View.OnClickListener, View.OnLongClickListener{
 
-    private ArrayList<Emotion> mEmotionList = new ArrayList<>();
     View view_user_input;
+    View view_home;
     LayoutInflater the_inflater;
     ViewGroup the_container;
     SharedPreference sharedPreference = new SharedPreference();
@@ -60,7 +63,10 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
     int the_hour = c.get(Calendar.HOUR_OF_DAY);
     int the_minute = c.get(Calendar.MINUTE);
     String comment;
+    // dialog references
     EditText editText_userInput;
+    Button button_change_time;
+    Button button_change_date;
 
     public Home() {
         // Required empty public constructor
@@ -68,21 +74,22 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View v;
         the_inflater = inflater;
         the_container = container;
-        view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
+        view_user_input = inflater.inflate(R.layout.user_input, the_container, false);
 
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_home, container, false);
-        Button button_love = (Button) v.findViewById(R.id.button_love);
-        Button button_fear = (Button) v.findViewById(R.id.button_fear);
-        Button button_surprise = (Button) v.findViewById(R.id.button_surprise);
-        Button button_anger = (Button) v.findViewById(R.id.button_anger);
-        Button button_joy = (Button) v.findViewById(R.id.button_joy);
-        Button button_sadness = (Button) v.findViewById(R.id.button_sadness);
+        view_home = inflater.inflate(R.layout.fragment_home, container, false);
+        // view fragment_home
+        Button button_love = (Button) view_home.findViewById(R.id.button_love);
+        Button button_fear = (Button) view_home.findViewById(R.id.button_fear);
+        Button button_surprise = (Button) view_home.findViewById(R.id.button_surprise);
+        Button button_anger = (Button) view_home.findViewById(R.id.button_anger);
+        Button button_joy = (Button) view_home.findViewById(R.id.button_joy);
+        Button button_sadness = (Button) view_home.findViewById(R.id.button_sadness);
+        Button button_stats = (Button) view_home.findViewById(R.id.button_stats);
         button_love.setOnClickListener(this);
         button_fear.setOnClickListener(this);
         button_surprise.setOnClickListener(this);
@@ -95,24 +102,50 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
         button_anger.setOnLongClickListener(this);
         button_joy.setOnLongClickListener(this);
         button_sadness.setOnLongClickListener(this);
-//        button_love.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                Toast.makeText(getActivity(), "Comment exceeded 100 characters",
-//                        Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//        });
+        // dialog_stats
+        button_stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                View dialog_layout = inflater.inflate(R.layout.dialog_stats, null);
+                TextView textView_love_stats = dialog_layout.findViewById(R.id.textView_love_stats);
+                TextView textView_surprise_stats = dialog_layout.findViewById(R.id.textView_surprise_stats);
+                TextView textView_joy_stats = dialog_layout.findViewById(R.id.textView_joy_stats);
+                TextView textView_sadness_stats = dialog_layout.findViewById(R.id.textView_sadness_stats);
+                TextView textView_fear_stats = dialog_layout.findViewById(R.id.textView_fear_stats);
+                TextView textView_anger_stats = dialog_layout.findViewById(R.id.textView_anger_stats);
+                StatGenerator statGenerator = new StatGenerator();
+                statGenerator.getStats(sharedPreference.readPreference(getActivity()));
 
-        return v;
+                textView_love_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getLove()));
+                textView_surprise_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getSurprise()));
+                textView_joy_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getJoy()));
+                textView_sadness_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getSadness()));
+                textView_fear_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getFear()));
+                textView_anger_stats.setText(String.format(Locale.CANADA,"%d",statGenerator.getAnger()));
+
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+                alertBuilder.setView(dialog_layout);
+                alertBuilder.setCancelable(true);
+                alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                Dialog dialog = alertBuilder.create();
+                dialog.show();
+            }
+        });
+
+        return view_home;
     }
 
     @Override public void onClick(View v) {
         final View v_1 = v;
         view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
         editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
-        Button button_change_time = (Button) view_user_input.findViewById(R.id.button_change_time);
-        Button button_change_date= (Button) view_user_input.findViewById(R.id.button_change_date);
+        button_change_time = (Button) view_user_input.findViewById(R.id.button_change_time);
+        button_change_date= (Button) view_user_input.findViewById(R.id.button_change_date);
         TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
         TextView textView_time = (TextView) view_user_input.findViewById(R.id.textView_time);
         // generate dialog
@@ -154,6 +187,8 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
                 emotion.setDate(date_and_time);
                 // save data
                 sharedPreference.savePreference(getActivity(), emotion);
+                Toast.makeText(getActivity(), String.format("%s added at %s", emotion.getEmotion(), emotion.getDate()),
+                        Toast.LENGTH_LONG).show();
             }
         });
 
@@ -225,7 +260,6 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
         dialog_datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog_datePicker.show();
-
     }
 
     @Override
@@ -260,4 +294,7 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
         return true;
     }
+
+
+
 }

@@ -14,6 +14,7 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="enter_comment">Enter Comment \n(less than 100 characters)</string>
-    <string name="what_is_your_emotion">Pick an emotion\nLong press to quick add an emotion</string>
+    <string name="what_is_your_emotion">Click to add an emotion. \nLong click to quick add.</string>
+    <string name="show_stats">Show Stats</string>
 
 </resources>
