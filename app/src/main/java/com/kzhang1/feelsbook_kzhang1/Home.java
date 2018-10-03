@@ -51,10 +51,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class Home extends Fragment implements View.OnClickListener, View.OnLongClickListener{
 
-    View view_user_input;
     View view_home;
-    LayoutInflater the_inflater;
-    ViewGroup the_container;
     SharedPreference sharedPreference = new SharedPreference();
     Calendar c = Calendar.getInstance();
     int the_year = c.get(Calendar.YEAR);
@@ -76,9 +73,6 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        the_inflater = inflater;
-        the_container = container;
-        view_user_input = inflater.inflate(R.layout.user_input, the_container, false);
 
         // Inflate the layout for this fragment
         view_home = inflater.inflate(R.layout.fragment_home, container, false);
@@ -142,15 +136,17 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
     @Override public void onClick(View v) {
         final View v_1 = v;
-        view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
-        editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
-        button_change_time = (Button) view_user_input.findViewById(R.id.button_change_time);
-        button_change_date= (Button) view_user_input.findViewById(R.id.button_change_date);
-        TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
-        TextView textView_time = (TextView) view_user_input.findViewById(R.id.textView_time);
+        LayoutInflater inflater = getLayoutInflater();
+        View layout_userInput = inflater.inflate(R.layout.user_input, null);
+//        view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
+        editText_userInput = (EditText) layout_userInput.findViewById(R.id.editText_userInput);
+        button_change_time = (Button) layout_userInput.findViewById(R.id.button_change_time);
+        button_change_date= (Button) layout_userInput.findViewById(R.id.button_change_date);
+        TextView textView_date = (TextView) layout_userInput.findViewById(R.id.textView_date);
+        TextView textView_time = (TextView) layout_userInput.findViewById(R.id.textView_time);
         // generate dialog
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-        alertBuilder.setView(view_user_input);
+        alertBuilder.setView(layout_userInput);
         alertBuilder.setCancelable(true);
         final Emotion emotion = new Emotion();
 
@@ -246,7 +242,9 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
         TimePickerDialog dialog_timePicker =
                 new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        TextView textView_time = (TextView) view_user_input.findViewById(R.id.textView_time);
+                        LayoutInflater inflater = getLayoutInflater();
+                        View layout_userInput = inflater.inflate(R.layout.user_input, null);
+                        TextView textView_time = (TextView) layout_userInput.findViewById(R.id.textView_time);
                         the_hour = hourOfDay;
                         the_minute = minute;
                         textView_time.setText(String.format("T%02d:%02d", the_hour, the_minute));
@@ -257,7 +255,9 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
     private void showDialogDatePicker () {
         DatePickerDialog.OnDateSetListener mOnDateSetListener;
-        final TextView textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
+        LayoutInflater inflater = getLayoutInflater();
+        View layout_userInput = inflater.inflate(R.layout.user_input, null);
+        final TextView textView_date = (TextView) layout_userInput.findViewById(R.id.textView_date);
         Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);

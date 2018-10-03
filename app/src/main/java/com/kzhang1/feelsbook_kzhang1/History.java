@@ -56,20 +56,15 @@ public class History extends Fragment {
 
     private EmotionListAdapter emotionListAdapter;
     private ArrayList<Emotion> mEmotionList = new ArrayList<Emotion>();
-    SharedPreference sharedPreference = new SharedPreference();
-    LayoutInflater the_inflater;
-    ViewGroup the_container;
-    View view_user_input;
-    Emotion emotion;
-    String comment;
-    int the_year;
-    int the_month;
-    int the_day;
-    int the_hour;
-    int the_minute;
-    String date;
-    TextView textView_time;
-    TextView textView_date;
+    private SharedPreference sharedPreference = new SharedPreference();
+    private Emotion emotion;
+    private TextView textView_time;
+    private TextView textView_date;
+    private int the_year;
+    private int the_month;
+    private int the_day;
+    private int the_hour;
+    private int the_minute;
 
     public History() {
         // Required empty public constructor
@@ -79,23 +74,19 @@ public class History extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view_user_input = inflater.inflate(R.layout.user_input, container, false);
-        View v = inflater.inflate(R.layout.fragment_history, container, false);
-        the_inflater = inflater;
-        the_container = container;
+        View layout_history = inflater.inflate(R.layout.fragment_history, container, false);
         mEmotionList = sharedPreference.readPreference(getActivity());
-
         // generate and set listAdapter
         Collections.sort(mEmotionList, new DateComparator());
         emotionListAdapter = new EmotionListAdapter(getContext(), mEmotionList);
-        ListView listView_emotion = (ListView) v.findViewById(R.id.history_listView);
+        ListView listView_emotion = (ListView) layout_history.findViewById(R.id.history_listView);
         listView_emotion.setAdapter(emotionListAdapter);
         listView_emotion.setLongClickable(true);
         // add eventListeners
         listView_emotion.setOnItemLongClickListener(longClickListener);
         listView_emotion.setOnItemClickListener(clickListener);
 
-        return v;
+        return layout_history;
     }
 
 
@@ -103,16 +94,19 @@ public class History extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 // modify history dialog
-                View view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
-                textView_time = (TextView) view_user_input.findViewById(R.id.textView_time);
-                textView_date = (TextView) view_user_input.findViewById(R.id.textView_date);
-                Button button_change_time = (Button) view_user_input.findViewById(R.id.button_change_time);
-                Button button_change_date= (Button) view_user_input.findViewById(R.id.button_change_date);
+                LayoutInflater inflater = getLayoutInflater();
+                View layout_user_input = inflater.inflate(R.layout.user_input, null);
+                textView_time = (TextView) layout_user_input.findViewById(R.id.textView_time);
+                textView_date = (TextView) layout_user_input.findViewById(R.id.textView_date);
+                Button button_change_time = (Button) layout_user_input.findViewById(R.id.button_change_time);
+                Button button_change_date= (Button) layout_user_input.findViewById(R.id.button_change_date);
                 emotion = mEmotionList.get(position);
-                comment = emotion.getComment();
-                final EditText editText_userInput = (EditText) view_user_input.findViewById(R.id.editText_userInput);
+                String comment = emotion.getComment();
+                String date = emotion.getDate();
+                final EditText editText_userInput = (EditText) layout_user_input.findViewById(R.id.editText_userInput);
+
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-                alertBuilder.setView(view_user_input);
+                alertBuilder.setView(layout_user_input);
                 alertBuilder.setCancelable(true);
                 alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -138,7 +132,6 @@ public class History extends Fragment {
                     }
                 });
                 editText_userInput.setText(comment);
-                date = emotion.getDate();
                 the_year = Integer.parseInt(date.substring(0,4));
                 the_month = Integer.parseInt(date.substring(5,7));
                 the_day = Integer.parseInt(date.substring(8,10));
@@ -168,9 +161,10 @@ public class History extends Fragment {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
             // deleteDialog
-            View v_deleteDialog = the_inflater.inflate(R.layout.dialog_delete, the_container, false);
+            LayoutInflater inflater = getLayoutInflater();
+            View layout_deleteDialog = inflater.inflate(R.layout.dialog_delete, null);
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-            alertBuilder.setView(v_deleteDialog);
+            alertBuilder.setView(layout_deleteDialog);
             alertBuilder.setCancelable(true);
             alertBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                 @Override

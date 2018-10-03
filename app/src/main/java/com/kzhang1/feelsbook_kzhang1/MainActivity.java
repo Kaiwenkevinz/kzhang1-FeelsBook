@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,15 +39,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-
 //        add navigation event listener
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //        set home fragment to default
         FragmentManager fragmentManager = getSupportFragmentManager();
-        setTitle("FeelsBook-kzhang1");
+        setTitle("kzhang1-FeelsBook");
         Home home = new Home();
         fragmentManager.beginTransaction().replace(R.id.fragment, home).commit();
     }
