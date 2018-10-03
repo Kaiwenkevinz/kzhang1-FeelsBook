@@ -154,6 +154,27 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
         alertBuilder.setCancelable(true);
         final Emotion emotion = new Emotion();
 
+        // comment length constrain
+        editText_userInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (editText_userInput.getText().length() >= 99) {
+                    Toast.makeText(getActivity(), String.format("Comment length can not exceed 100"),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
