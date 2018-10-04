@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,13 +18,11 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    setTitle("Home");
                     Home home = new Home();
                     fragmentManager.beginTransaction().replace(R.id.fragment, home).commit();
                     return true;
 
                 case R.id.navigation_history:
-//                    setTitle("History");
                     History history = new History();
                     fragmentManager.beginTransaction().replace(R.id.fragment, history).commit();
                     return true;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -5,20 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class EmotionListAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<Emotion> mEmotionList;
-    SharedPreference sharedPreference;
 
-    public EmotionListAdapter(Context mContext, ArrayList<Emotion> mEmotionList) {
+    EmotionListAdapter(Context mContext, ArrayList<Emotion> mEmotionList) {
         this.mContext = mContext;
         this.mEmotionList = mEmotionList;
-        sharedPreference = new SharedPreference();
     }
 
     @Override
@@ -51,9 +47,6 @@ public class EmotionListAdapter extends BaseAdapter {
         textViewEmotion.setText(mEmotionList.get(position).getEmotion());
         textViewDate.setText(mEmotionList.get(position).getDate());
         textViewComment.setText(mEmotionList.get(position).getComment());
-
-//        v.setTag(mEmotionList.get(position).getId());
-
 
         return v;
     }

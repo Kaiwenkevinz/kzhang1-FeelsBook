@@ -5,13 +5,10 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,45 +22,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
-
-import static android.content.Context.MODE_PRIVATE;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Home extends Fragment implements View.OnClickListener, View.OnLongClickListener{
 
-    View view_home;
-    SharedPreference sharedPreference = new SharedPreference();
-    Calendar c = Calendar.getInstance();
-    int the_year = c.get(Calendar.YEAR);
-    int the_month = c.get(Calendar.MONTH) + 1;
-    int the_day = c.get(Calendar.DAY_OF_MONTH);
-    int the_hour = c.get(Calendar.HOUR_OF_DAY);
-    int the_minute = c.get(Calendar.MINUTE);
-    String comment;
+    private SharedPreference sharedPreference = new SharedPreference();
+    private Calendar c = Calendar.getInstance();
+    private int the_year = c.get(Calendar.YEAR);
+    private int the_month = c.get(Calendar.MONTH) + 1;
+    private int the_day = c.get(Calendar.DAY_OF_MONTH);
+    private int the_hour = c.get(Calendar.HOUR_OF_DAY);
+    private int the_minute = c.get(Calendar.MINUTE);
+    private String comment;
     // dialog references
-    EditText editText_userInput;
-    Button button_change_time;
-    Button button_change_date;
+    private EditText editText_userInput;
 
     public Home() {
         // Required empty public constructor
@@ -75,7 +51,7 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        view_home = inflater.inflate(R.layout.fragment_home, container, false);
+        View view_home = inflater.inflate(R.layout.fragment_home, container, false);
         // view fragment_home
         Button button_love = (Button) view_home.findViewById(R.id.button_love);
         Button button_fear = (Button) view_home.findViewById(R.id.button_fear);
@@ -140,8 +116,8 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
         View layout_userInput = inflater.inflate(R.layout.user_input, null);
 //        view_user_input = the_inflater.inflate(R.layout.user_input, the_container, false);
         editText_userInput = (EditText) layout_userInput.findViewById(R.id.editText_userInput);
-        button_change_time = (Button) layout_userInput.findViewById(R.id.button_change_time);
-        button_change_date= (Button) layout_userInput.findViewById(R.id.button_change_date);
+        Button button_change_time = (Button) layout_userInput.findViewById(R.id.button_change_time);
+        Button button_change_date = (Button) layout_userInput.findViewById(R.id.button_change_date);
         TextView textView_date = (TextView) layout_userInput.findViewById(R.id.textView_date);
         TextView textView_time = (TextView) layout_userInput.findViewById(R.id.textView_time);
         // generate dialog
@@ -315,7 +291,4 @@ public class Home extends Fragment implements View.OnClickListener, View.OnLongC
 
         return true;
     }
-
-
-
 }

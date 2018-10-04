@@ -1,6 +1,5 @@
 package com.kzhang1.feelsbook_kzhang1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StatGenerator {

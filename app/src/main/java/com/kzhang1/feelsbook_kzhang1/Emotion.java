@@ -5,13 +5,6 @@ public class Emotion {
     private String date;
     private String comment;
 
-    // constructor
-    Emotion(String emotion, String date, String comment) {
-        this.emotion = emotion;
-        this.date = date;
-        this.comment = comment;
-    }
-
     Emotion() {
         this.emotion = "";
         this.date = "";

@@ -5,48 +5,23 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.ValueIterator;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import static android.R.layout.simple_list_item_1;
 
 
 /**
@@ -76,13 +51,13 @@ public class History extends Fragment {
 
         View layout_history = inflater.inflate(R.layout.fragment_history, container, false);
         mEmotionList = sharedPreference.readPreference(getActivity());
-        // generate and set listAdapter
         Collections.sort(mEmotionList, new DateComparator());
+        // generate and set listAdapter
         emotionListAdapter = new EmotionListAdapter(getContext(), mEmotionList);
         ListView listView_emotion = (ListView) layout_history.findViewById(R.id.history_listView);
         listView_emotion.setAdapter(emotionListAdapter);
         listView_emotion.setLongClickable(true);
-        // add eventListeners
+        // add eventListeners to emotion listView
         listView_emotion.setOnItemLongClickListener(longClickListener);
         listView_emotion.setOnItemClickListener(clickListener);
 

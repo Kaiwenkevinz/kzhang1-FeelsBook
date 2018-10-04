@@ -3,23 +3,18 @@ package com.kzhang1.feelsbook_kzhang1;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SharedPreference {
 
-    public static final String PREFS_NAME = "shared preference";
-    public static final String TAG = "emotions";
+    private static final String TAG = "emotions";
     private ArrayList<Emotion> emotionList = new ArrayList<Emotion>();
 
-    public SharedPreference() {
+    SharedPreference() {
         super();
     }
 
